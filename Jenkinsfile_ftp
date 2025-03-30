@@ -32,7 +32,7 @@ node {
       // upload package
       sh '''
          creds=($(az webapp deployment list-publishing-profiles --name cs10capstone1 --resource-group CS10Capstone1-eastus --query "[?contains(publishMethod, 'FTP')].[publishUrl,userName,userPWD]" --output tsv))
-         curl -v -T target/calculator-1.0.war -u ${creds[1]}:${creds[2]}} ${creds[0]}/ROOT.war
+         curl -v -T target/calculator-1.0.war -u ${creds[1]}:${creds[2]}} ${creds[0]}/webapps/ROOT.war
          #curl -v -T target/calculator-1.0.war -u ${ftpUser}}:${ftpPassword}} ${ftpUrl}/webapps/ROOT.war
       '''
       // log out
