@@ -28,13 +28,13 @@ node {
                     az account set -s %AZURE_SUBSCRIPTION_ID%
                 '''
             }
-            // get publish settings
-            def pubProfilesJson = bat(script: "az webapp deployment list-publishing-profiles -g ${resourceGroup} -n ${webAppName}", returnStdout: true)
-            def ftpProfile = getFtpPublishProfile pubProfilesJson
-            // upload package
-            bat("curl -T target\\calculator-1.0.war ${ftpProfile.url}/webapps/ROOT.war -u \"${ftpProfile.username}:${ftpProfile.password}\"")
-            // log out
-            bat 'az logout'
-        }
+    // get publish settings
+        def pubProfilesJson = powershell(script: "az webapp deployment list-publishing-profiles -g ${resourceGroup} -n ${webAppName}", returnStdout: true)
+        def ftpProfile = getFtpPublishProfile pubProfilesJson
+        // upload package
+        powershell("curl -T target\\calculator-1.0.war ${ftpProfile.url}/webapps/ROOT.war -u \"${ftpProfile.username}:${ftpProfile.password}\"")
+        // log out
+        powershell 'az logout'
+            }
     }
 }
