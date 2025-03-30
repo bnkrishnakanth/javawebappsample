@@ -28,21 +28,13 @@ node {
                     az account set -s %AZURE_SUBSCRIPTION_ID%
                 '''
             }
-   // get publish settings
-    def pubProfilesJson = powershell(script: "az webapp deployment list-publishing-profiles -g ${resourceGroup} -n ${webAppName}", returnStdout: true)
-    def ftpProfile = getFtpPublishProfile pubProfilesJson
-    // upload package
-    powershell """
-        \$username = '${ftpProfile.username}'
-        \$password = '${ftpProfile.password}'
-        \$url = '${ftpProfile.url}/webapps/ROOT.war'
-        \$filePath = 'target\\calculator-1.0.war'
-        \$securePassword = ConvertTo-SecureString \$password -AsPlainText -Force
-        \$credential = New-Object System.Management.Automation.PSCredential(\$username, \$securePassword)
-        Invoke-WebRequest -Uri \$url -Credential \$credential -Method Put -InFile \$filePath
-    """
-    // log out
-    powershell 'az logout'
+           // get publish settings
+            def pubProfilesJson = bat(script: "az webapp deployment list-publishing-profiles -g ${resourceGroup} -n ${webAppName}", returnStdout: true)
+            def ftpProfile = getFtpPublishProfile pubProfilesJson
+            // upload package
+            bat("curl -T target\\calculator-1.0.war ${ftpProfile.url}/webapps/ROOT.war -u \"${ftpProfile.username}:${ftpProfile.password}\"")
+            // log out
+            bat 'az logout'
     }
 }
 }
