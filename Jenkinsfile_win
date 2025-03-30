@@ -45,3 +45,4 @@ node {
     powershell 'az logout'
     }
 }
+}
