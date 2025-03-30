@@ -20,7 +20,7 @@ node {
   
     stage('deploy') {
       def resourceGroup = 'CS10Capstone1-eastus'
-      def webAppName = 'cs10capstone1-afencaaaf9d9dcf0.canadaeast-01.azurewebsites.net'
+      def webAppName = 'cs10capstone1'
       // login Azure
       withCredentials([usernamePassword(credentialsId: 'KKAdminSP', passwordVariable: 'AZURE_CLIENT_SECRET', usernameVariable: 'AZURE_CLIENT_ID')]) {
        sh '''
