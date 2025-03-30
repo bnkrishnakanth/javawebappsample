@@ -31,7 +31,7 @@ node {
       // get publish settings
       // upload package
       sh '''
-         creds=($(az webapp deployment list-publishing-profiles --name $webAppName --resource-group $resourceGroup --query "[?contains(publishMethod, 'FTP')].[publishUrl,userName,userPWD]" --output tsv))
+         creds=($(az webapp deployment list-publishing-profiles --name cs10capstone1 --resource-group CS10Capstone1-eastus --query "[?contains(publishMethod, 'FTP')].[publishUrl,userName,userPWD]" --output tsv))
          curl -T target/calculator-1.0.war -u ${creds[1]}:${creds[2]} ${creds[0]}/webapps/ROOT.war
       '''
       // log out
